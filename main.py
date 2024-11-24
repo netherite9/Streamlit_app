@@ -25,7 +25,7 @@ if app_mode == 'Home':
     st.write(data.head())
     st.bar_chart(data[['ApplicantIncome', 'LoanAmount']].head(20))
 
-if app_mode == 'Prediction':
+if app_mode == 'Prediksi':
     ApplicantIncome = st.sidebar.slider('ApplicantIncome', 0, 10000, 0)
     LoanAmount = st.sidebar.slider('LoanAmount in K$', 9.0, 700.0, 200.0)
     if st.button("Predict"):
