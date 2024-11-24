@@ -16,7 +16,7 @@ def get_value(val, my_dict):
         if val == key:
             return value
 
-app_mode = st.sidebar.selectbox('Select Page',['Home','Prediction'])
+app_mode = st.sidebar.selectbox('Select Page',['Home','Prediksi'])
 if app_mode == 'Home':
     st.title('Loan Prediction')
     st.image('loan_image.jpg')
@@ -28,12 +28,20 @@ if app_mode == 'Home':
 if app_mode == 'Prediction':
     ApplicantIncome = st.sidebar.slider('ApplicantIncome', 0, 10000, 0)
     LoanAmount = st.sidebar.slider('LoanAmount in K$', 9.0, 700.0, 200.0)
-    # Assuming additional input features here...
-    # Prediction Logic
     if st.button("Predict"):
-        loaded_model = pickle.load(open('Random_Forest.sav', 'rb'))
-        prediction = loaded_model.predict(np.array([ApplicantIncome, LoanAmount]).reshape(1, -1))
-        if prediction[0] == 0:
-            st.error('According to our calculations, you will not get the loan.')
-        else:
-            st.success('Congratulations! You will get the loan.')
+        file_ = open("6m-rain.gif", "rb")        
+        contents = file_.read()        
+        data_url = base64.b64encode(contents).decode("utf-8")        
+        file_.close()        
+        file = open("green-cola-no.gif", "rb")        
+        contents = file.read()        
+        data_url_no = base64.b64encode(contents).decode("utf-8")        
+        file.close()        
+        loaded_model = pickle.load(open('Random_Forest.sav', 'rb'))        
+        prediction = loaded_model.predict(single_sample)        
+        if prediction[0] == 0 :            
+            st.error(    'According to our Calculations, you will not get the loan from Bank'    )            
+            st.markdown(    f'<img src="data:image/gif;base64,{data_url_no}" alt="cat gif">', unsafe_allow_html=True,)        
+        elif prediction[0] == 1 :            
+            st.success(    'Congratulations!! you will get the loan from Bank'    )            
+            st.markdown(    f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">', unsafe_allow_html=True,)
